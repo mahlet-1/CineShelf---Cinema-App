@@ -1,5 +1,6 @@
 import { Link, useLocation, Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function DashBoard() {
   const location = useLocation();
@@ -56,6 +57,7 @@ export default function DashBoard() {
 
         <main className="flex-1 bg-transparent p-8 overflow-y-auto text-white">
           <Outlet />
+          <Footer />
         </main>
       </div>
     </div>
