@@ -4,8 +4,9 @@ import { FiSun, FiMoon } from "react-icons/fi";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import SearchInput from "../ui/SearchInput";
+import GenreFilter from "../ui/GenreFilter";
 
-export default function Navbar({ isDarkMode, toggleTheme }) {
+export default function Navbar({ isDarkMode, toggleTheme, selectedGenre, setSelectedGenre }) {
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isActive = (path) => location.pathname === path;
@@ -15,6 +16,8 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
         ? `text-white hover:text-blue-400 ${isActive(path) ? "border-b-2 border-blue-400 pb-1" : ""}`
         : `text-slate-700 hover:text-blue-600 ${isActive(path) ? "border-b-2 border-blue-600 pb-1" : ""}`
     }`;
+
+    const contentType = location.pathname.includes("/series") ? "tv" : "movie";
 
   return (
     <header className={`w-full flex items-center justify-between px-10 py-6 backdrop-blur-xl border-b shrink-0 z-25 transition-colors duration-300 ${
@@ -43,7 +46,14 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
           }`}
         >
           <FiSearch className="w-4 h-4" />
+          
         </button>
+        <GenreFilter 
+          selectedGenre={selectedGenre} 
+          setSelectedGenre={setSelectedGenre} 
+          contentType={contentType} 
+          isDarkMode={isDarkMode} 
+        />
         <Link to="/saved" className={`flex items-center space-x-2 ${linkStyle("/saved")}`}>
           <FaBookmark className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
         </Link>
