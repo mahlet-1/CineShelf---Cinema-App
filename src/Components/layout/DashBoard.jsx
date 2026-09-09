@@ -20,7 +20,7 @@ export default function DashBoard() {
   const quickCategories = [
     { name: "Action" }, { name: "Sci-Fi" }, { name: "Romance" },
     { name: "Comedy" }, { name: "Animation" }, { name: "Horror" },
-    { name: "Documentary" }, { name: "Adventure" }, { name: "Reality TV Shows" },
+    { name: "Documentary" }, { name: "Adventure" }, { name: "Reality TV Shows" }, {name: "More..."}
   ];
 
   return (

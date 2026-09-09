@@ -17,7 +17,7 @@ export default function MovieCard({ movie, index, sectionTitle }) {
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-gray-800 rounded-2xl shadow-md">
         {sectionTitle === "TOP 10 Today" && index !== undefined && (
-          <div className="absolute top-2.5 left-2.5 z-20 bg-transparent text-white font-black text-[10px] px-2 py-0.5 rounded-md shadow-lg tracking-wider">
+          <div className="absolute top-2.5 left-2.5 z-20 bg-blue-100 text-blue-800 font-black text-[10px] px-2 py-0.5 rounded-md shadow-lg tracking-wider">
             {index + 1 < 10 ? `0${index + 1}` : index + 1}
           </div>
         )}

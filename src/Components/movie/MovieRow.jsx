@@ -1,11 +1,12 @@
 import { useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MovieCard from "./MovieCard";
+import SkeletonCard from "./SkeletonCard";
 
-export default function MovieRow({ movies, title }) {
+export default function MovieRow({ movies, title, loading }) {
   const scrollRef = useRef(null);
 
-  if (!movies || movies.length === 0) return null;
+  if (!loading && (!movies || movies.length === 0)) return null;
 
   const handleScroll = (direction) => {
     if (scrollRef.current) {
@@ -47,11 +48,19 @@ export default function MovieRow({ movies, title }) {
         className="flex overflow-x-auto space-x-5 pb-4 pt-1 no-scrollbar scroll-smooth"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {movies.map((movie, index) => (
-          <div key={movie.id} className="min-w-[180px] w-[180px] flex-shrink-0">
-            <MovieCard movie={movie} index={index} sectionTitle={title} />
-          </div>
-        ))}
+        {loading || !movies || movies.length === 0 ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="min-w-[180px] w-[180px] flex-shrink-0">
+              <SkeletonCard />
+            </div>
+          ))
+        ) : (
+          movies.map((movie, index) => (
+            <div key={movie.id} className="min-w-[180px] w-[180px] flex-shrink-0">
+              <MovieCard movie={movie} index={index} sectionTitle={title} />
+            </div>
+          ))
+        )}
       </div>
     </section>
   );
