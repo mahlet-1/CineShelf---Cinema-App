@@ -1,9 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaBookmark } from "react-icons/fa";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { useState } from "react";
+import { FiSearch } from "react-icons/fi";
+import SearchInput from "../ui/SearchInput";
 
 export default function Navbar({ isDarkMode, toggleTheme }) {
   const location = useLocation();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isActive = (path) => location.pathname === path;
   const linkStyle = (path) => 
     `transition-colors text-sm font-semibold ${
@@ -30,7 +34,16 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
         <Link to="/series" className={linkStyle("/series")}>Series</Link>
       </nav>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 relative">
+        <button
+          onClick={() => setIsSearchOpen(!isSearchOpen)}
+          aria-label="Toggle Search"
+          className={`p-2 rounded-full transition-all cursor-pointer ${
+            isDarkMode ? "hover:bg-white/10 text-white" : "hover:bg-slate-100 text-slate-700"
+          }`}
+        >
+          <FiSearch className="w-4 h-4" />
+        </button>
         <Link to="/saved" className={`flex items-center space-x-2 ${linkStyle("/saved")}`}>
           <FaBookmark className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
         </Link>
@@ -50,7 +63,14 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
             )}
           </span>
         </button>
+        {isSearchOpen && (
+          <div className="absolute top-14 right-16 w-72 sm:w-80 p-3 rounded-2xl bg-white/80 dark:bg-neutral-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+            <SearchInput onClose={() => setIsSearchOpen(false)} />
+          </div>
+        )}
+
       </div>
     </header>
   );
 }
+     
