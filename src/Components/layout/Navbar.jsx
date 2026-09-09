@@ -19,7 +19,7 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
       <span className={`text-lg font-black tracking-wider ${
         isDarkMode 
           ? "text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.75)]" 
-          : "text-blue-600 drop-shadow-[0_0_5px_rgba(37,99,235,0.2)]"
+          : "text-blue-500 drop-shadow-[0_0_5px_rgba(37,99,235,0.2)]"
       }`}>
         CineShelf
       </span>
