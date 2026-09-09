@@ -1,0 +1,63 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
+
+export default function MovieCard({ movie, index, sectionTitle }) {
+  const [isSaved, setIsSaved] = useState(false);
+
+  const toggleWatchlist = (e) => {
+    e.preventDefault();
+    setIsSaved(!isSaved);
+  };
+
+  return (
+    <Link
+      to={`/movie/${movie.id}`}
+      className="group flex flex-col bg-transparent rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+    >
+      <div className="relative aspect-[2/3] w-full overflow-hidden bg-slate-200 dark:bg-cinema-surface rounded-2xl shadow-md transition-colors duration-300">
+        {sectionTitle === "TOP 10 Today" && index !== undefined && (
+          <div className="absolute top-2.5 left-2.5 z-20 bg-slate-900/80 dark:bg-black/60 backdrop-blur-md text-white font-black text-[10px] px-2 py-0.5 rounded-md shadow-lg tracking-wider">
+            {index + 1 < 10 ? `0${index + 1}` : index + 1}
+          </div>
+        )}
+
+        <img
+          src={movie.poster_path ? `https://tmdb.org{movie.poster_path}` : "https://placeholder.com"}
+          alt={movie.title || movie.name}
+          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+
+        <button
+          onClick={toggleWatchlist}
+          aria-label="Save to Watchlist"
+          className="absolute top-3 right-3 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all cursor-pointer z-10 border border-white/20"
+        >
+          {isSaved ? (
+            <FaBookmark className="w-4 h-4 text-blue-400" />
+          ) : (
+            <FaRegBookmark className="w-4 h-4 text-white hover:text-blue-400" />
+          )}
+        </button>
+      </div>
+
+      <div className="flex flex-col flex-grow py-3 px-1">
+        <div className="flex items-center justify-between space-x-2">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-cinema-text truncate group-hover:text-blue-500 transition-colors">
+            {movie.title || movie.name}
+          </h3>
+          {movie.vote_average ? (
+            <div className="flex items-center space-x-1 text-xs font-semibold text-yellow-500 flex-shrink-0">
+              <FaStar className="w-3 h-3" />
+              <span>{movie.vote_average.toFixed(1)}</span>
+            </div>
+          ) : null}
+        </div>
+        <p className="text-xs text-slate-500 dark:text-cinema-muted mt-1">
+          {movie.release_date ? movie.release_date.split("-")[0] : (movie.first_air_date ? movie.first_air_date.split("-")[0] : "N/A")}
+        </p>
+      </div>
+    </Link>
+  );
+}
