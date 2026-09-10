@@ -6,9 +6,11 @@ import { FiSearch } from "react-icons/fi";
 import SearchInput from "../ui/SearchInput";
 import GenreFilter from "../ui/GenreFilter";
 import { useTheme } from "../../Context/ThemeContext";
+import { useWatchlist } from "../../Context/WatchlistContext";
 
 export default function Navbar({ selectedGenre, setSelectedGenre }) {
   const { isDarkMode, toggleTheme } = useTheme();
+  const { watchlist } = useWatchlist();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isActive = (path) => location.pathname === path;
@@ -55,8 +57,15 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
           contentType={contentType}
           isDarkMode={isDarkMode}
         />
-        <Link to="/saved" className={`flex items-center space-x-2 ${linkStyle("/saved")}`}>
-          <FaBookmark className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
+        <Link to="/saved" className={linkStyle("/saved")}>
+          <span className="relative inline-flex">
+            <FaBookmark className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
+            {watchlist.length > 0 && (
+              <span className="absolute -top-2 -right-2 min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full bg-white text-blue-600 text-[9px] font-bold leading-none">
+                {watchlist.length}
+              </span>
+            )}
+          </span>
         </Link>
 
         <button
