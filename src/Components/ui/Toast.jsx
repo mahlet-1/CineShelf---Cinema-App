@@ -11,13 +11,13 @@ export default function Toast() {
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className="flex items-center space-x-3 px-5 py-3 rounded-xl bg-neutral-900/95 backdrop-blur-xl border border-white/10 text-white text-sm font-semibold shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300"
+          className="flex items-center space-x-3 px-5 py-3 rounded-xl bg-white text-blue-500 border border-slate-200 dark:bg-black dark:text-blue-400 dark:border-neutral-800 text-sm font-semibold shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300"
         >
           <span>{notification.message}</span>
           <button
             onClick={() => removeNotification(notification.id)}
             aria-label="Dismiss notification"
-            className="p-1 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+            className="p-1 rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors cursor-pointer"
           >
             <IoClose className="w-4 h-4" />
           </button>

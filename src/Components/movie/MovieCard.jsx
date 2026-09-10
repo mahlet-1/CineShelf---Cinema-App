@@ -59,7 +59,7 @@ export default function MovieCard({ movie, index, sectionTitle }) {
     </h3>
     <RatingBadge 
       voteAverage={movie.vote_average} 
-      className="relative bottom-auto left-auto flex-shrink-0 scale-90 origin-top-right" 
+      className="relative bottom-auto left-auto flex-shrink-0 scale-90 origin-top-right text-yellow-600 dark:text-yellow-400" 
     />
   </div>
   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">

@@ -86,7 +86,7 @@ export default function Home() {
             <div className="flex items-center space-x-3 text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-4">
               <RatingBadge 
               voteAverage={currentHero.vote_average} 
-              className="relative bottom-auto left-auto" 
+              className="relative bottom-auto left-auto text-yellow-600 dark:text-yellow-400 " 
               />
               <span>•</span>
               <span>
