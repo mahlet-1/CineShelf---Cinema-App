@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaBookmark } from "react-icons/fa";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import SearchInput from "../ui/SearchInput";
@@ -13,6 +13,7 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
   const { watchlist } = useWatchlist();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isActive = (path) => location.pathname === path;
   const linkStyle = (path) =>
     `transition-colors text-sm font-semibold ${
@@ -24,20 +25,32 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
   const contentType = location.pathname.includes("/series") ? "tv" : "movie";
 
   return (
-    <header className={`sticky top-0 w-full flex items-center justify-between px-10 py-6 shrink-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${
+    <header className={`sticky top-0 w-full flex items-center justify-between px-4 md:px-10 py-4 md:py-6 shrink-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${
       isDarkMode 
         ? "bg-neutral-950/70 border-white/10 text-white" 
         : "bg-white/70 border-slate-200/80 text-slate-900 shadow-sm"
     }`}>
-      <span className={`text-lg font-black tracking-wider ${
-        isDarkMode
-          ? "text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.75)]"
-          : "text-blue-500 drop-shadow-[0_0_5px_rgba(37,99,235,0.2)]"
-      }`}>
-        CineShelf
-      </span>
+      <div className="flex items-center space-x-3 md:space-x-0">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
+          className={`md:hidden p-2 -ml-2 rounded-full transition-all cursor-pointer ${
+            isDarkMode ? "hover:bg-white/10 text-white" : "hover:bg-slate-100 text-slate-700"
+          }`}
+        >
+          {isMobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+        </button>
 
-      <nav className="flex items-center space-x-8">
+        <span className={`text-base md:text-lg font-black tracking-wider ${
+          isDarkMode
+            ? "text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.75)]"
+            : "text-blue-500 drop-shadow-[0_0_5px_rgba(37,99,235,0.2)]"
+        }`}>
+          CineShelf
+        </span>
+      </div>
+
+      <nav className="hidden md:flex items-center space-x-8">
         <Link to="/" className={linkStyle("/")}>Home</Link>
         <Link to="/movies" className={linkStyle("/movies")}>Movies</Link>
         <Link to="/series" className={linkStyle("/series")}>Series</Link>
@@ -86,11 +99,23 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
           </span>
         </button>
         {isSearchOpen && (
-          <div className="absolute top-14 right-16 w-72 sm:w-80 p-3 rounded-2xl bg-white/80 dark:bg-neutral-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+          <div className="absolute top-14 right-0 md:right-16 w-72 sm:w-80 p-3 rounded-2xl bg-white/80 dark:bg-neutral-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 z-50">
             <SearchInput onClose={() => setIsSearchOpen(false)} />
           </div>
         )}
       </div>
+      {isMobileMenuOpen && (
+        <div className={`md:hidden absolute top-full left-0 w-full flex flex-col p-4 space-y-3 border-b backdrop-blur-md transition-colors duration-300 ${
+          isDarkMode
+            ? "bg-neutral-950/95 border-white/10"
+            : "bg-white/95 border-slate-200/80"
+        }`}>
+          <Link to="/" className={linkStyle("/")} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <Link to="/movies" className={linkStyle("/movies")} onClick={() => setIsMobileMenuOpen(false)}>Movies</Link>
+          <Link to="/series" className={linkStyle("/series")} onClick={() => setIsMobileMenuOpen(false)}>Series</Link>
+        </div>
+      )}
     </header>
   );
 }
+   
