@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
 import { useWatchlist } from "../../Context/WatchlistContext";
+import RatingBadge from "../ui/RatingBadge";
 
 export default function MovieCard({ movie, index, sectionTitle }) {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
@@ -36,6 +37,8 @@ export default function MovieCard({ movie, index, sectionTitle }) {
           loading="lazy"
         />
 
+        <RatingBadge voteAverage={movie.vote_average} />
+
         <button
           onClick={toggleWatchlist}
           aria-label="Save to Watchlist"
@@ -50,17 +53,9 @@ export default function MovieCard({ movie, index, sectionTitle }) {
       </div>
 
       <div className="flex flex-col flex-grow py-3 px-1">
-        <div className="flex items-center justify-between space-x-2">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate group-hover:text-blue-500 transition-colors">
             {movie.title || movie.name}
           </h3>
-          {movie.vote_average ? (
-            <div className="flex items-center space-x-1 text-xs font-semibold text-yellow-500 flex-shrink-0">
-              <FaStar className="w-3 h-3" />
-              <span>{movie.vote_average.toFixed(1)}</span>
-            </div>
-          ) : null}
-        </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
           {movie.release_date ? movie.release_date.split("-")[0] : (movie.first_air_date ? movie.first_air_date.split("-")[0] : "N/A")}
         </p>

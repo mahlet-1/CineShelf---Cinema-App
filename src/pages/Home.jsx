@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useMovies } from "../Hooks/useMovies";
 import { useNavigate } from "react-router-dom";
 import { FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import MovieRow from "../components/movie/MovieRow";
+import MovieRow from "../Components/movie/MovieRow";
+import RatingBadge from "../Components/ui/RatingBadge";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -82,16 +83,20 @@ export default function Home() {
               {currentHero.title || currentHero.name}
             </h1>
 
-            <div className="flex items-center space-x-4 text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-4">
-              <div className="flex items-center space-x-1 text-yellow-600">
-                <FaStar className="w-3 h-3" />
-                <span>{currentHero.vote_average ? currentHero.vote_average.toFixed(1) : "N/A"}</span>
-              </div>
+            <div className="flex items-center space-x-3 text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-4">
+              <RatingBadge 
+              voteAverage={currentHero.vote_average} 
+              className="relative bottom-auto left-auto" 
+              />
               <span>•</span>
-              <span>{currentHero.release_date ? currentHero.release_date.split("-")[0] : (currentHero.first_air_date ? currentHero.first_air_date.split("-")[0] : "N/A")}</span>
-              <span>•</span>
-              <span>Movie</span>
-            </div>
+              <span>
+                {currentHero.release_date 
+                ? currentHero.release_date.split("-")[0] 
+                : (currentHero.first_air_date ? currentHero.first_air_date.split("-")[0] : "N/A")}
+                </span>
+                <span>•</span>
+                <span></span>
+                </div>
 
             <p className="text-slate-600 dark:text-neutral-300 text-xs md:text-sm line-clamp-3 mb-8 leading-relaxed">
               {currentHero.overview}

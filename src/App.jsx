@@ -7,6 +7,7 @@ import Browse from "./pages/Browse";
 import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./pages/SearchResults";
 import Watchlist from "./pages/Watchlist";
+import NotFound from "./pages/NotFound";
 import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
 import { ThemeProvider, useTheme } from "./Context/ThemeContext";
@@ -34,6 +35,7 @@ function AppShell() {
             <Route path="/series/:id" element={<MovieDetail />} />
             <Route path="/saved" element={<Watchlist />} />
             <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />
+            <Route path="*" element={<NotFound />} />
           
           </Routes>
         </main>
