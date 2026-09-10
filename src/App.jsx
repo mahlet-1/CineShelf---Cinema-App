@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Browse from "./pages/Browse";
 import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./pages/SearchResults";
-import Watchlist from "./pages/Watchlist";
+import WatchList from "./pages/WatchList";
 import NotFound from "./pages/NotFound";
 import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
