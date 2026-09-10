@@ -4,6 +4,7 @@ import Navbar from "./Components/layout/Navbar";
 import Footer from "./Components/layout/Footer";
 import Home from "./pages/Home";
 import Browse from "./pages/Browse";
+import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./pages/SearchResults";
 import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
@@ -27,8 +28,11 @@ function AppShell() {
             <Route path="/movies" element={<Browse />} />
             <Route path="/series" element={<Browse />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/series/:id" element={<MovieDetail />} />
             <Route path="/saved" element={<h1 className="text-2xl font-bold">My Watchlist</h1>} />
             <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />
+          
           </Routes>
         </main>
         <Footer />

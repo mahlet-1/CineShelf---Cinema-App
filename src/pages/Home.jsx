@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useMovies } from "../Hooks/useMovies";
-import { FaPlay, FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import MovieRow from "../Components/movie/MovieRow";
+import { useNavigate } from "react-router-dom";
+import { FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import MovieRow from "../components/movie/MovieRow";
 
 export default function Home() {
+  const navigate = useNavigate();
   const { data: trendingMovies, loading: trendingLoading } = useMovies("/trending/movie/day");
   const { data: popularMovies, loading: popularLoading } = useMovies("/movie/popular");
   const { data: popularSeries, loading: seriesLoading } = useMovies("/tv/popular");
@@ -42,18 +44,17 @@ export default function Home() {
           <button 
             onClick={() => setCurrentIndex((prev) => (prev === 0 ? heroMovies.length - 1 : prev - 1))}
             aria-label="Previous Slide"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
           >
             <FaChevronLeft className="w-4 h-4" />
           </button>
           <button 
             onClick={() => setCurrentIndex((prev) => (prev + 1) % heroMovies.length)}
             aria-label="Next Slide"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
           >
             <FaChevronRight className="w-4 h-4" />
           </button>
-
           <div className="absolute inset-0 z-0">
             {heroMovies.map((movie, index) => (
               <div 
@@ -97,11 +98,10 @@ export default function Home() {
             </p>
 
             <div className="flex items-center space-x-3">
-              <button className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-blue-400 hover:bg-blue-500 text-white font-semibold transition-all shadow-lg cursor-pointer">
-                <FaPlay className="w-3.5 h-3.5 fill-current" />
-                <span>Play</span>
-              </button>
-              <button className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-slate-200/80 hover:bg-slate-200 text-slate-900 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white font-semibold backdrop-blur-md border border-slate-300 dark:border-white/20 transition-all cursor-pointer">
+              <button 
+                onClick={() => navigate(`/movie/${currentHero.id}`)}
+                className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-slate-200/80 hover:bg-slate-200 text-slate-900 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white font-semibold backdrop-blur-md border border-slate-300 dark:border-white/20 transition-all cursor-pointer"
+              >
                 <FaInfoCircle className="w-3.5 h-3.5" />
                 <span>See more</span>
               </button>

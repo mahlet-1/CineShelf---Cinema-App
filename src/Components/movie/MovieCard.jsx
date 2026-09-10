@@ -20,9 +20,11 @@ export default function MovieCard({ movie, index, sectionTitle }) {
     }
   };
 
+  const detailPath = movie.title ? `/movie/${movie.id}` : `/series/${movie.id}`;
+
   return (
     <Link 
-      to={`/movie/${movie.id}`} 
+      to={detailPath} 
       className="group flex flex-col bg-transparent rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-gray-800 rounded-2xl shadow-md">
