@@ -33,7 +33,7 @@ function AppShell() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/series/:id" element={<MovieDetail />} />
-            <Route path="/saved" element={<Watchlist />} />
+            <Route path="/saved" element={<WatchList />} />
             <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />
             <Route path="*" element={<NotFound />} />
           
