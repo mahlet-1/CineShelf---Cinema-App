@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { FaPlay, FaStar, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMovies } from "../Hooks/useMovies";
+import { useWatchlist } from "../Context/WatchlistContext";
 import { useNotification } from "../Context/NotificationContext";
 import MovieRow from "../Components/movie/MovieRow";
 import TrailerModal from "../Components/movie/TrailerModal";
@@ -11,7 +12,7 @@ export default function MovieDetail() {
   const location = useLocation();
   const contentType = location.pathname.startsWith("/series") ? "tv" : "movie";
   const { addNotification } = useNotification();
-
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
   const [isSaved, setIsSaved] = useState(false);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 
@@ -43,17 +44,15 @@ export default function MovieDetail() {
    const trailer = videos?.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
+  const saved = isInWatchlist(data);
 
   const toggleWatchlist = () => {
-    const savedList = !isSaved;
-    setIsSaved(savedList);
-    const title = data?.title || data?.name;
-    if (savedList) {
-      addNotification(`Added "${title}" to watchlist`);
-    } else {
-      addNotification(`Removed "${title}" from watchlist`);
-    }
-  };
+  if (saved) {
+    removeFromWatchlist(data);
+  } else {
+    addToWatchlist(data);
+  }
+};
 
   const title = data.title || data.name;
   const year = data.release_date
@@ -141,12 +140,12 @@ export default function MovieDetail() {
                 onClick={toggleWatchlist}
                 className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-slate-200/80 hover:bg-slate-200 text-slate-900 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white font-semibold backdrop-blur-md border border-slate-300 dark:border-white/20 transition-all cursor-pointer"
               >
-                {isSaved ? (
+                {saved ? (
                   <FaBookmark className="w-3.5 h-3.5 text-blue-400" />
                 ) : (
                   <FaRegBookmark className="w-3.5 h-3.5" />
                 )}
-                <span>{isSaved ? "In Watchlist" : "Add to Watchlist"}</span>
+                <span>{saved ? "In Watchlist" : "Add to Watchlist"}</span>
               </button>
             </div>
           </div>

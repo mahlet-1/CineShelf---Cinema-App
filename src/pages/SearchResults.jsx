@@ -42,17 +42,16 @@ export default function SearchResults() {
 
   const toggleSave = (item, e) => {
     e.preventDefault();
+      e.stopPropagation();
     const title = item.title || item.name;
+    
     
     if (isInWatchlist(item)) {
       removeFromWatchlist(item);
-      addNotification(`Removed "${title}" from watchlist`);
     } else {
       addToWatchlist(item);
-      addNotification(`Added "${title}" to watchlist`);
     }
   };
-  
   return (
     <div className="px-6 md:px-16 py-8 flex flex-col min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
       <h1 className="text-2xl font-black mb-6 tracking-wide text-slate-900 dark:text-white">
