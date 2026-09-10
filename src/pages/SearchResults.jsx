@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
 import { useNotification } from "../Context/NotificationContext";
 import { useWatchlist } from "../Context/WatchlistContext";
@@ -11,6 +11,7 @@ export default function SearchResults() {
   const [loading, setLoading] = useState(false);
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
   const { addNotification } = useNotification();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!query) return;
@@ -77,10 +78,12 @@ export default function SearchResults() {
             const rating = item.vote_average ? item.vote_average.toFixed(1) : "N/A";
             const saved = isInWatchlist(item);
             const delay = Math.min(index, 10) * 60;
+            const detailPath = item.media_type === "tv" ? `/series/${item.id}` : `/movie/${item.id}`;
             return (
             <div
             key={item.id}
-            className="group flex flex-col bg-white dark:bg-neutral-900/40 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all duration-300 shadow-lg opacity-0 animate-fade-in-up"
+            onClick={() => navigate(detailPath)}
+            className="group flex flex-col bg-white dark:bg-neutral-900/40 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all duration-300 shadow-lg opacity-0 animate-fade-in-up cursor-pointer"
             style={{ animationDelay: `${delay}ms` }}
             >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-slate-100 dark:bg-neutral-800">
