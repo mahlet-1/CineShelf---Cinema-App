@@ -37,8 +37,6 @@ export default function MovieCard({ movie, index, sectionTitle }) {
           loading="lazy"
         />
 
-        <RatingBadge voteAverage={movie.vote_average} />
-
         <button
           onClick={toggleWatchlist}
           aria-label="Save to Watchlist"
@@ -53,13 +51,19 @@ export default function MovieCard({ movie, index, sectionTitle }) {
       </div>
 
       <div className="flex flex-col flex-grow py-3 px-1">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate group-hover:text-blue-500 transition-colors">
-            {movie.title || movie.name}
-          </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          {movie.release_date ? movie.release_date.split("-")[0] : (movie.first_air_date ? movie.first_air_date.split("-")[0] : "N/A")}
-        </p>
-      </div>
+  <div className="flex items-start justify-between gap-2">
+    <h3 className="text-sm font-bold text-gray-900 dark:text-white line-clamp-1 group-hover:text-blue-500 transition-colors">
+      {movie.title || movie.name}
+    </h3>
+    <RatingBadge 
+      voteAverage={movie.vote_average} 
+      className="relative bottom-auto left-auto flex-shrink-0 scale-90 origin-top-right" 
+    />
+  </div>
+  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+    {movie.release_date ? movie.release_date.split("-")[0] : (movie.first_air_date ? movie.first_air_date.split("-")[0] : "N/A")}
+  </p>
+</div>
     </Link>
   );
 }

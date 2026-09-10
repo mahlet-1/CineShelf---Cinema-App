@@ -95,7 +95,7 @@ export default function Home() {
                 : (currentHero.first_air_date ? currentHero.first_air_date.split("-")[0] : "N/A")}
                 </span>
                 <span>•</span>
-                <span></span>
+                <span>{currentHero.media_type === "tv" || currentHero.name ? "TV Series" : "Movie"}</span>
                 </div>
 
             <p className="text-slate-600 dark:text-neutral-300 text-xs md:text-sm line-clamp-3 mb-8 leading-relaxed">
