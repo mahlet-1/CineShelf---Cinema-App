@@ -45,14 +45,14 @@ export default function Home() {
           <button 
             onClick={() => setCurrentIndex((prev) => (prev === 0 ? heroMovies.length - 1 : prev - 1))}
             aria-label="Previous Slide"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
           >
             <FaChevronLeft className="w-4 h-4" />
           </button>
           <button 
             onClick={() => setCurrentIndex((prev) => (prev + 1) % heroMovies.length)}
             aria-label="Next Slide"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity backdrop-blur-md cursor-pointer"
           >
             <FaChevronRight className="w-4 h-4" />
           </button>
