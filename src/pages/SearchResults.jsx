@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
 import { useNotification } from "../Context/NotificationContext";
+import { useWatchlist } from "../Context/WatchlistContext";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") || searchParams.get("search") || "";
-  
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
   const { addNotification } = useNotification();
 
   useEffect(() => {
@@ -42,17 +42,16 @@ export default function SearchResults() {
   const toggleSave = (item, e) => {
     e.preventDefault();
     const title = item.title || item.name;
-    if (savedMovies.some((m) => m.id === item.id)) {
-      setSavedMovies(savedMovies.filter((m) => m.id !== item.id));
+    
+    if (isInWatchlist(item)) {
+      removeFromWatchlist(item);
       addNotification(`Removed "${title}" from watchlist`);
     } else {
-      setSavedMovies([...savedMovies, item]);
+      addToWatchlist(item);
       addNotification(`Added "${title}" to watchlist`);
     }
   };
-
-  const isSaved = (item) => savedMovies.some((m) => m.id === item?.id);
-
+  
   return (
     <div className="px-6 md:px-16 py-8 flex flex-col min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
       <h1 className="text-2xl font-black mb-6 tracking-wide text-slate-900 dark:text-white">
@@ -76,6 +75,7 @@ export default function SearchResults() {
             const releaseDate = item.release_date || item.first_air_date;
             const year = releaseDate ? releaseDate.split("-")[0] : "N/A";
             const rating = item.vote_average ? item.vote_average.toFixed(1) : "N/A";
+            const saved = isInWatchlist(item);
 
             return (
               <div 
@@ -100,7 +100,7 @@ export default function SearchResults() {
                     aria-label="Save to Watchlist"
                     className="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all cursor-pointer border border-white/10"
                   >
-                    {isSaved(item) ? (
+                    {saved ? (
                       <FaBookmark className="w-3.5 h-3.5 text-blue-400" />
                     ) : (
                       <FaRegBookmark className="w-3.5 h-3.5 text-white" />

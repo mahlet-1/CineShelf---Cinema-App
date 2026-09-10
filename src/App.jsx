@@ -6,9 +6,11 @@ import Home from "./pages/Home";
 import Browse from "./pages/Browse";
 import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./pages/SearchResults";
+import Watchlist from "./pages/Watchlist";
 import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
 import { ThemeProvider, useTheme } from "./Context/ThemeContext";
+import { WatchlistProvider } from "./Context/WatchlistContext";
 
 function AppShell() {
   const { isDarkMode } = useTheme();
@@ -30,7 +32,7 @@ function AppShell() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/series/:id" element={<MovieDetail />} />
-            <Route path="/saved" element={<h1 className="text-2xl font-bold">My Watchlist</h1>} />
+            <Route path="/saved" element={<Watchlist />} />
             <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />
           
           </Routes>
@@ -45,7 +47,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <NotificationProvider>
-        <AppShell />
+        <WatchlistProvider>
+          <AppShell />
+        </WatchlistProvider>
       </NotificationProvider>
     </ThemeProvider>
   );

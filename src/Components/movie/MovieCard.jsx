@@ -1,22 +1,17 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
-import { useNotification } from "../../Context/NotificationContext";
+import { useWatchlist } from "../../Context/WatchlistContext";
 
 export default function MovieCard({ movie, index, sectionTitle }) {
-  const [isSaved, setIsSaved] = useState(false);
-  const { addNotification } = useNotification();
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
+  const saved = isInWatchlist(movie);
 
   const toggleWatchlist = (e) => {
     e.preventDefault(); 
-    const SavedList = !isSaved;
-    setIsSaved(SavedList);
-
-    const title = movie.title || movie.name;
-    if (SavedList) {
-      addNotification(`Added "${title}" to watchlist`);
+    if (saved) {
+      removeFromWatchlist(movie);
     } else {
-      addNotification(`Removed "${title}" from watchlist`);
+      addToWatchlist(movie);
     }
   };
 
@@ -46,7 +41,7 @@ export default function MovieCard({ movie, index, sectionTitle }) {
           aria-label="Save to Watchlist"
           className="absolute top-3 right-3 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all cursor-pointer z-10 border border-white/20"
         >
-          {isSaved ? (
+          {saved ? (
             <FaBookmark className="w-4 h-4 text-blue-400" />
           ) : (
             <FaRegBookmark className="w-4 h-4 text-white hover:text-blue-400" />

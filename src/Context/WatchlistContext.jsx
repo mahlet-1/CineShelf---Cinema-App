@@ -3,28 +3,28 @@ import { useLocalStorage } from "../Hooks/useLocalStorage";
 import { useNotification } from "./NotificationContext";
 
 const WatchlistContext = createContext();
+const getKey = (item) => `${item.title ? "movie" : "tv"}-${item.id}`;
 
 export function WatchlistProvider({ children }) {
   const [watchlist, setWatchlist] = useLocalStorage("cinema_watchlist", []);
   const { addNotification } = useNotification();
 
   const addToWatchlist = (movie) => {
-    if (!watchlist.some((item) => item.id === movie.id)) {
-      setWatchlist((prev) => [...prev, movie]);
+    const key = getKey(movie);
+    if (!watchlist.some((item) => getKey(item) === key)) {
+      setWatchlist([...watchlist, movie]);
       addNotification(`Added "${movie.title || movie.name}" to watchlist`);
     }
   };
-
-  const removeFromWatchlist = (id) => {
-    const movie = watchlist.find((item) => item.id === id);
-    setWatchlist((prev) => prev.filter((item) => item.id !== id));
-    if (movie) {
-      addNotification(`Removed "${movie.title || movie.name}" from watchlist`);
-    }
+  const removeFromWatchlist = (movie) => {
+    const key = getKey(movie);
+    setWatchlist(watchlist.filter((item) => getKey(item) !== key));
+    addNotification(`Removed "${movie.title || movie.name}" to watchlist`);
   };
 
-  const isInWatchlist = (id) => {
-    return watchlist.some((item) => item.id === id);
+  const isInWatchlist = (movie) => {
+    const key = getKey(movie);
+    return watchlist.some((item) => getKey(item) === key);
   };
 
   return (

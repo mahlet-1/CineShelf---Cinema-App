@@ -20,20 +20,6 @@ export default function MovieDetail() {
   const { data: videos } = useMovies(`/${contentType}/${id}/videos`);
   const { data: similar, loading: similarLoading } = useMovies(`/${contentType}/${id}/recommendations`);
 
-  const trailer = videos?.find(
-    (v) => v.type === "Trailer" && v.site === "YouTube"
-  );
-
-  const toggleWatchlist = () => {
-    const savedList = !isSaved;
-    setIsSaved(savedList);
-    const title = data?.title || data?.name;
-    if (savedList) {
-      addNotification(`Added "${title}" to watchlist`);
-    } else {
-      addNotification(`Removed "${title}" from watchlist`);
-    }
-  };
 
   if (loading) {
     return (
@@ -53,6 +39,21 @@ export default function MovieDetail() {
       </div>
     );
   }
+
+   const trailer = videos?.find(
+    (v) => v.type === "Trailer" && v.site === "YouTube"
+  );
+
+  const toggleWatchlist = () => {
+    const savedList = !isSaved;
+    setIsSaved(savedList);
+    const title = data?.title || data?.name;
+    if (savedList) {
+      addNotification(`Added "${title}" to watchlist`);
+    } else {
+      addNotification(`Removed "${title}" from watchlist`);
+    }
+  };
 
   const title = data.title || data.name;
   const year = data.release_date
