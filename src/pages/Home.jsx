@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="space-y-12 pb-12">
       {currentHero && (
-        <div className="relative rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 shadow-2xl border border-slate-200 dark:border-white/10 group transition-colors duration-300">
+        <div className="relative rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 shadow-2xl border border-slate-200 dark:border-white/10 group transition-colors duration-300 animate-fade-in-up">
           <button 
             onClick={() => setCurrentIndex((prev) => (prev === 0 ? heroMovies.length - 1 : prev - 1))}
             aria-label="Previous Slide"

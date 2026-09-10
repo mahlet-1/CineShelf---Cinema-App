@@ -70,18 +70,19 @@ export default function SearchResults() {
 
       {!loading && results.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {results.map((item) => {
+          {results.map((item, index) => {
             const title = item.title || item.name;
             const releaseDate = item.release_date || item.first_air_date;
             const year = releaseDate ? releaseDate.split("-")[0] : "N/A";
             const rating = item.vote_average ? item.vote_average.toFixed(1) : "N/A";
             const saved = isInWatchlist(item);
-
+            const delay = Math.min(index, 10) * 60;
             return (
-              <div 
-                key={item.id} 
-                className="group flex flex-col bg-white dark:bg-neutral-900/40 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all duration-300 shadow-lg"
-              >
+            <div
+            key={item.id}
+            className="group flex flex-col bg-white dark:bg-neutral-900/40 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all duration-300 shadow-lg opacity-0 animate-fade-in-up"
+            style={{ animationDelay: `${delay}ms` }}
+            >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-slate-100 dark:bg-neutral-800">
                   {item.poster_path ? (
                     <img

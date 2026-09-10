@@ -17,11 +17,13 @@ export default function MovieCard({ movie, index, sectionTitle }) {
   };
 
   const detailPath = movie.title ? `/movie/${movie.id}` : `/series/${movie.id}`;
+  const delay = Math.min(index ?? 0, 10) * 60; // ms, capped stagger
 
   return (
-    <Link 
-      to={detailPath} 
-      className="group flex flex-col bg-transparent rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+    <Link
+      to={detailPath}
+      className="group flex flex-col bg-transparent rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 opacity-0 animate-fade-in-up"
+      style={{ animationDelay: `${delay}ms` }}
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-gray-800 rounded-2xl shadow-md">
         {sectionTitle === "TOP 10 Today" && index !== undefined && (

@@ -69,7 +69,7 @@ export default function MovieDetail() {
 
   return (
     <div className="space-y-12 pb-12">
-      <div className="relative rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 shadow-2xl border border-slate-200 dark:border-white/10">
+      <div className="relative rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 shadow-2xl border border-slate-200 dark:border-white/10 animate-fade-in-up">
         <div className="absolute inset-0 z-0">
           <img
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path || data.poster_path}`}
@@ -166,29 +166,36 @@ export default function MovieDetail() {
                     <div className="h-3 bg-slate-200 dark:bg-neutral-800 rounded-md w-3/4 mt-2" />
                   </div>
                 ))
-              : credits.cast.slice(0, 15).map((member) => (
-                  <div key={member.id} className="min-w-[120px] w-[120px] flex-shrink-0">
-                    <div className="aspect-[2/3] w-full overflow-hidden rounded-2xl bg-gray-800 shadow-md mb-2">
-                      <img
+                : credits.cast.slice(0, 15).map((member, index) => {
+                    const delay = Math.min(index, 10) * 60;
+                    return (
+                    <div
+                    key={member.id}
+                    className="min-w-[120px] w-[120px] flex-shrink-0 opacity-0 animate-fade-in-up"
+                    style={{ animationDelay: `${delay}ms` }}
+                    >
+                        <div className="aspect-[2/3] w-full overflow-hidden rounded-2xl bg-gray-800 shadow-md mb-2">
+                        <img
                         src={
-                          member.profile_path
-                            ? `https://image.tmdb.org/t/p/w300${member.profile_path}`
-                            : "https://via.placeholder.com/300x450?text=No+Photo"
-                        }
-                        alt={member.name}
-                        className="object-cover w-full h-full"
-                        loading="lazy"
-                      />
+                        member.profile_path
+                        ? `https://image.tmdb.org/t/p/w300${member.profile_path}`
+                        : "https://via.placeholder.com/300x450?text=No+Photo"
+                    }
+                    alt={member.name}
+                    className="object-cover w-full h-full"
+                    loading="lazy"
+                    />
                     </div>
                     <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                      {member.name}
-                    </p>
-                    <p className="text-[11px] text-slate-500 dark:text-neutral-400 truncate">
-                      {member.character}
-                    </p>
-                  </div>
-                ))}
-          </div>
+                        {member.name}
+                        </p>
+                        <p className="text-[11px] text-slate-500 dark:text-neutral-400 truncate">
+                            {member.character}
+                            </p>
+                            </div>
+                            );
+                            })}
+                            </div>
         </section>
       )}
 
