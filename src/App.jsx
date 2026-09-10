@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/layout/Navbar";
 import Footer from "./Components/layout/Footer";
 import Home from "./pages/Home";
+import Browse from "./pages/Browse";
 import SearchResults from "./pages/SearchResults";
 import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
@@ -23,8 +24,8 @@ function AppShell() {
         <main className="flex-1 px-6 md:px-16 py-8">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/movies" element={<h1 className="text-2xl font-bold">Movies</h1>} />
-            <Route path="/series" element={<h1 className="text-2xl font-bold">TV Series</h1>} />
+            <Route path="/movies" element={<Browse />} />
+            <Route path="/series" element={<Browse />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/saved" element={<h1 className="text-2xl font-bold">My Watchlist</h1>} />
             <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />

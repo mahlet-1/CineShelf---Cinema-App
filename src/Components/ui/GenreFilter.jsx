@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiGrid } from "react-icons/fi";
 
-export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMode }) {
+export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMode, contentType }) {
   const [activeTab, setActiveTab] = useState("movie");
   const [genres, setGenres] = useState([]);
   const [isGenreOpen, setIsGenreOpen] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (contentType === "tv" || contentType === "movie") {
+      setActiveTab(contentType);
+    }
+  }, [contentType]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -30,6 +38,15 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
       fetchGenres();
     }
   }, [activeTab, isGenreOpen]);
+
+  const handleSelectGenre = (genre) => {
+    if (typeof setSelectedGenre === "function") {
+      setSelectedGenre(genre.id);
+    }
+    setIsGenreOpen(false);
+    const path = activeTab === "tv" ? "/series" : "/movies";
+    navigate(path, { state: { genreId: genre.id } });
+  };
 
   return (
     <div className="relative inline-block">
@@ -76,12 +93,7 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
             genres.map((genre) => (
               <button
                 key={genre.id}
-                onClick={() => {
-                  if (typeof setSelectedGenre === "function") {
-                    setSelectedGenre(genre.id);
-                  }
-                  setIsGenreOpen(false);
-                }}
+                onClick={() => handleSelectGenre(genre)}
                 className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer ${
                   selectedGenre === genre.id 
                     ? "text-white font-bold bg-white/10" 

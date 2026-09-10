@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMovies } from "../Hooks/useMovies";
 import { FaPlay, FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import MovieRow from "../components/movie/MovieRow";
+import MovieRow from "../Components/movie/MovieRow";
 
 export default function Home() {
   const { data: trendingMovies, loading: trendingLoading } = useMovies("/trending/movie/day");
