@@ -24,8 +24,10 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
   const contentType = location.pathname.includes("/series") ? "tv" : "movie";
 
   return (
-    <header className={`w-full flex items-center justify-between px-10 py-6 backdrop-blur-xl border-b shrink-0 z-25 transition-colors duration-300 ${
-      isDarkMode ? "bg-black/40 border-white/10 text-white" : "bg-white/80 border-slate-200 text-slate-900"
+    <header className={`sticky top-0 w-full flex items-center justify-between px-10 py-6 shrink-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${
+      isDarkMode 
+        ? "bg-neutral-950/70 border-white/10 text-white" 
+        : "bg-white/70 border-slate-200/80 text-slate-900 shadow-sm"
     }`}>
       <span className={`text-lg font-black tracking-wider ${
         isDarkMode
