@@ -1,13 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
+import { useNotification } from "../../Context/NotificationContext";
 
 export default function MovieCard({ movie, index, sectionTitle }) {
   const [isSaved, setIsSaved] = useState(false);
+  const { addNotification } = useNotification();
 
   const toggleWatchlist = (e) => {
     e.preventDefault(); 
-    setIsSaved(!isSaved);
+    const SavedList = !isSaved;
+    setIsSaved(SavedList);
+
+    const title = movie.title || movie.name;
+    if (SavedList) {
+      addNotification(`Added "${title}" to watchlist`);
+    } else {
+      addNotification(`Removed "${title}" from watchlist`);
+    }
   };
 
   return (

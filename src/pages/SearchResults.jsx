@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaStar } from "react-icons/fa";
+import { useNotification } from "../Context/NotificationContext";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -9,6 +10,7 @@ export default function SearchResults() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
+  const { addNotification } = useNotification();
 
   useEffect(() => {
     if (!query) return;
@@ -39,10 +41,13 @@ export default function SearchResults() {
 
   const toggleSave = (item, e) => {
     e.preventDefault();
+    const title = item.title || item.name;
     if (savedMovies.some((m) => m.id === item.id)) {
       setSavedMovies(savedMovies.filter((m) => m.id !== item.id));
+      addNotification(`Removed "${title}" from watchlist`);
     } else {
       setSavedMovies([...savedMovies, item]);
+      addNotification(`Added "${title}" to watchlist`);
     }
   };
 

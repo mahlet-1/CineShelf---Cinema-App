@@ -1,22 +1,47 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DashBoard from "./Components/layout/DashBoard";
+import Navbar from "./Components/layout/Navbar";
+import Footer from "./Components/layout/Footer";
 import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
+import Toast from "./Components/ui/Toast";
+import { NotificationProvider } from "./Context/NotificationContext";
+import { ThemeProvider, useTheme } from "./Context/ThemeContext";
+
+function AppShell() {
+  const { isDarkMode } = useTheme();
+
+  return (
+    <BrowserRouter>
+      <Toast />
+      <div
+        className={`w-screen min-h-screen flex flex-col selection:bg-blue-400 selection:text-black transition-colors duration-300 ${
+          isDarkMode ? "bg-cinema-bg text-cinema-text" : "bg-slate-50 text-slate-800"
+        }`}
+      >
+        <Navbar />
+        <main className="flex-1 px-6 md:px-16 py-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movies" element={<h1 className="text-2xl font-bold">Movies</h1>} />
+            <Route path="/series" element={<h1 className="text-2xl font-bold">TV Series</h1>} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/saved" element={<h1 className="text-2xl font-bold">My Watchlist</h1>} />
+            <Route path="/profile" element={<h1 className="text-2xl font-bold">Profile</h1>} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
+}
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<DashBoard />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<h1 className="text-2xl font-bold">Movies</h1>} />
-          <Route path="/series" element={<h1 className="text-2xl font-bold">TV Series</h1>} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/saved" element={<h1 className="text-2xl font-bold">My Watchlist</h1>} />
-          <Route path="/profile" element={<h1 className="text-2xl font-bold"> Profile</h1>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <NotificationProvider>
+        <AppShell />
+      </NotificationProvider>
+    </ThemeProvider>
   );
 }

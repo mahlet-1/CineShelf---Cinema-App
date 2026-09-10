@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMovies } from "../Hooks/useMovies";
 import { FaPlay, FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import MovieRow from "../Components/movie/MovieRow";
+import MovieRow from "../components/movie/MovieRow";
 
 export default function Home() {
   const { data: trendingMovies, loading: trendingLoading } = useMovies("/trending/movie/day");
@@ -69,7 +69,7 @@ export default function Home() {
                 />
               </div>
             ))}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-40/60 dark:from-neutral-900 dark:via-neutral-900/80 to-transparent z-20"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/60 dark:from-neutral-900 dark:via-neutral-900/80 to-transparent z-20"></div>
           </div>
 
           <div className="relative z-30 p-8 md:p-14 max-w-2xl flex flex-col items-start justify-end min-h-[440px]">
