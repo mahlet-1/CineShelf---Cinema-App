@@ -17,7 +17,7 @@ export default function MovieCard({ movie, index, sectionTitle }) {
   };
 
   const detailPath = movie.title ? `/movie/${movie.id}` : `/series/${movie.id}`;
-  const delay = Math.min(index ?? 0, 10) * 60; // ms, capped stagger
+  const delay = Math.min(index ?? 0, 10) * 60; 
 
   return (
     <Link
