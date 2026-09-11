@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiGrid } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 
-export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMode, contentType }) {
+export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMode, contentType, isOpen, onToggle, onClose }) {
   const [activeTab, setActiveTab] = useState("movie");
   const [genres, setGenres] = useState([]);
   const [isGenreOpen, setIsGenreOpen] = useState(false);
@@ -34,16 +35,16 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
       }
     };
 
-    if (isGenreOpen) {
+    if (isOpen) {
       fetchGenres();
     }
-  }, [activeTab, isGenreOpen]);
+  }, [activeTab, isOpen]);
 
   const handleSelectGenre = (genre) => {
     if (typeof setSelectedGenre === "function") {
       setSelectedGenre(genre.id);
     }
-    setIsGenreOpen(false);
+    if (onClose) onClose();
     const path = activeTab === "tv" ? "/series" : "/movies";
     navigate(path, { state: { genreId: genre.id } });
   };
@@ -51,7 +52,7 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
   return (
     <div className="relative inline-block">
       <button
-        onClick={() => setIsGenreOpen(!isGenreOpen)}
+        onClick={onToggle}
         aria-label="Filter by Genres"
         className={`p-2 rounded-full transition-all cursor-pointer flex items-center justify-center ${
           isDarkMode ? "hover:bg-white/10 text-white" : "hover:bg-slate-100 text-slate-700"
@@ -60,8 +61,18 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
         <FiGrid className="w-4 h-4" />
       </button>
 
-      {isGenreOpen && (
+      {isOpen && (
         <div className="absolute top-12 right-0 w-64 py-5 px-4 rounded-3xl bg-neutral-950/95 backdrop-blur-2xl border border-white/10 shadow-2xl z-50 max-h-96 overflow-y-auto">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Filter Genres</span>
+            <button 
+              onClick={onClose}
+              aria-label="Close Genres"
+              className="p-1 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
           <div className="flex bg-white/5 p-1 rounded-xl mb-4">
             <button
               onClick={() => setActiveTab("movie")}

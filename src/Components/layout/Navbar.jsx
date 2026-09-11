@@ -12,7 +12,7 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
   const { isDarkMode, toggleTheme } = useTheme();
   const { watchlist } = useWatchlist();
   const location = useLocation();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isActive = (path) => location.pathname === path;
   const linkStyle = (path) =>
@@ -58,7 +58,7 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
 
       <div className="flex items-center space-x-4 relative">
         <button
-          onClick={() => setIsSearchOpen(!isSearchOpen)}
+          onClick={() => setActiveDropdown(activeDropdown === "search" ? null : "search")}
           aria-label="Toggle Search"
           className={`p-2 rounded-full transition-all cursor-pointer ${
             isDarkMode ? "hover:bg-white/10 text-white" : "hover:bg-slate-100 text-slate-700"
@@ -71,6 +71,9 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
           setSelectedGenre={setSelectedGenre}
           contentType={contentType}
           isDarkMode={isDarkMode}
+          isOpen={activeDropdown === "genre"}
+          onToggle={() => setActiveDropdown(activeDropdown === "genre" ? null : "genre")}
+          onClose={() => setActiveDropdown(null)}
         />
         <Link to="/saved" className={linkStyle("/saved")}>
           <span className="relative inline-flex">
@@ -98,9 +101,19 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
             )}
           </span>
         </button>
-        {isSearchOpen && (
+        {activeDropdown === "search" && (
           <div className="absolute top-14 right-0 md:right-16 w-72 sm:w-80 p-3 rounded-2xl bg-white/80 dark:bg-neutral-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-            <SearchInput onClose={() => setIsSearchOpen(false)} />
+            <div className="flex items-center justify-between mb-2 px-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">Search</span>
+              <button 
+                onClick={() => setActiveDropdown(null)}
+                aria-label="Close Search"
+                className="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 dark:text-neutral-400 transition-colors cursor-pointer"
+              >
+                <FiX className="w-4 h-4" />
+              </button>
+            </div>
+            <SearchInput onClose={() => setActiveDropdown(null)} />
           </div>
         )}
       </div>
