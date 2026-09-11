@@ -62,22 +62,24 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
       </button>
 
       {isOpen && (
-        <div className="absolute top-12 right-0 w-64 py-5 px-4 rounded-3xl bg-neutral-950/95 backdrop-blur-2xl border border-white/10 shadow-2xl z-50 max-h-96 overflow-y-auto">
+        <div className="absolute top-12 right-0 w-64 py-5 px-4 rounded-3xl bg-white/95 dark:bg-neutral-950/95 backdrop-blur-2xl border border-slate-200 dark:border-white/10 shadow-2xl z-50 max-h-96 overflow-y-auto">
           <div className="flex items-center justify-between mb-3 px-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Filter Genres</span>
+           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-neutral-400">Filter Genres</span>
             <button 
               onClick={onClose}
               aria-label="Close Genres"
-              className="p-1 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+             className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
             >
               <FiX className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex bg-white/5 p-1 rounded-xl mb-4">
+          <div className="flex bg-slate-100 dark:bg-white/5 p-1 rounded-xl mb-4">
             <button
               onClick={() => setActiveTab("movie")}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                activeTab === "movie" ? "bg-blue-400 text-white shadow-md" : "text-neutral-400 hover:text-white"
+                activeTab === "movie" 
+                  ? "bg-blue-600 dark:bg-blue-400 text-white shadow-md" 
+                  : "text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               Movies
@@ -85,21 +87,23 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
             <button
               onClick={() => setActiveTab("tv")}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                activeTab === "tv" ? "bg-blue-400 text-white shadow-md" : "text-neutral-400 hover:text-white"
+                activeTab === "tv" 
+                  ? "bg-blue-600 dark:bg-blue-400 text-white shadow-md" 
+                  : "text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               Series
             </button>
           </div>
 
-          <div className="text-[11px] font-bold tracking-widest text-neutral-400 uppercase px-3 pb-2">
+          <div className="text-[11px] font-bold tracking-widest text-slate-400 dark:text-neutral-400 uppercase px-3 pb-2">
             {activeTab === "tv" ? "Series Genres" : "Movie Genres"}
           </div>
 
           {error ? (
-            <div className="text-xs text-red-400 px-3 py-2">Failed: {error}</div>
+            <div className="text-xs text-red-500 dark:text-red-400 px-3 py-2">Failed: {error}</div>
           ) : genres.length === 0 ? (
-            <div className="text-xs text-neutral-400 px-3 py-2">Loading genres...</div>
+            <div className="text-xs text-slate-400 dark:text-neutral-400 px-3 py-2">Loading genres...</div>
           ) : (
             genres.map((genre) => (
               <button
@@ -107,8 +111,8 @@ export default function GenreFilter({ selectedGenre, setSelectedGenre, isDarkMod
                 onClick={() => handleSelectGenre(genre)}
                 className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer ${
                   selectedGenre === genre.id 
-                    ? "text-white font-bold bg-white/10" 
-                    : "text-neutral-200 hover:text-white hover:bg-white/5"
+                    ? "text-slate-900 dark:text-white font-bold bg-slate-100 dark:bg-white/10" 
+                    : "text-slate-600 dark:text-neutral-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                 }`}
               >
                 {genre.name}

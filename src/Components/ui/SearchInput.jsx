@@ -83,7 +83,7 @@ export default function SearchInput({ onClose }) {
       </form>
 
       {searchQuery.trim() && (
-        <div className="absolute top-12 left-0 right-0 max-h-96 overflow-y-auto rounded-2xl bg-neutral-900/95 backdrop-blur-2xl border border-white/10 shadow-2xl z-50 p-2 divide-y divide-white/5">
+        <div className="absolute top-12 left-0 right-0 max-h-96 overflow-y-auto rounded-2xl bg-white/95 dark:bg-neutral-900/95 backdrop-blur-2xl border border-slate-200 dark:border-white/10 shadow-2xl z-50 p-2 divide-y divide-slate-100 dark:divide-white/5">
           <div
             onClick={handleSearchSubmit}
             className="px-3 py-2.5 text-xs font-bold text-neutral-400 hover:text-white cursor-pointer transition-colors"
@@ -119,10 +119,10 @@ export default function SearchInput({ onClose }) {
                 )}
               </div>
               <div className="flex flex-col overflow-hidden">
-                <span className="text-xs font-bold text-white truncate group-hover:text-blue-400 transition-colors">
+                <span className="text-xs font-bold text-black dark:text-white truncate group-hover:text-blue-400 transition-colors">
                   {item.title || item.name}
                 </span>
-                <span className="text-[10px] text-neutral-400 uppercase tracking-wider">
+                <span className="text-[10px] text-neutral-500 uppercase tracking-wider">
                   {item.media_type === "tv" ? "TV Show" : "Movie"}
                 </span>
               </div>
