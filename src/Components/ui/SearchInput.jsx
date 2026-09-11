@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDebounce } from "../../Hooks/useDebounce";
 import { FiSearch } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
@@ -8,19 +9,20 @@ export default function SearchInput({ onClose }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const debouncedQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
-    if (!searchQuery.trim()) {
-      setSuggestions([]);
-      return;
-    }
+  if (!debouncedQuery.trim()) {
+    setSuggestions([]);
+    return;
+  }
 
     const fetchSuggestions = async () => {
       setLoading(true);
       try {
         const apiKey = import.meta.env.VITE_TMDB_KEY;
         const response = await fetch(
-          `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}`
+          `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(debouncedQuery)}`
         );
         const data = await response.json();
         
@@ -37,9 +39,8 @@ export default function SearchInput({ onClose }) {
       }
     };
 
-    const timer = setTimeout(fetchSuggestions, 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+    fetchSuggestions();
+  }, [debouncedQuery]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
