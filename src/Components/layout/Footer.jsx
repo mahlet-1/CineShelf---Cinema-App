@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
 
   return (
     <footer className="w-full border-t border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs px-10 py-10 mt-auto shrink-0 transition-colors duration-300">
@@ -21,22 +24,34 @@ export default function Footer() {
           </h3>
           <ul className="flex flex-wrap gap-6">
             <li>
-              <Link to="/" className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
+              <Link 
+              to="/"
+              onClick={scrollToTop} 
+              className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/movies" className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
+              <Link 
+              to="/movies" 
+              onClick={scrollToTop} 
+              className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
                 Movies
               </Link>
             </li>
             <li>
-              <Link to="/series" className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
+              <Link 
+              to="/series" 
+              onClick={scrollToTop} 
+              className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
                 Series
               </Link>
             </li>
             <li>
-              <Link to="/saved" className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
+              <Link 
+              to="/saved" 
+              onClick={scrollToTop} 
+              className="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors font-medium">
                 Watchlist
               </Link>
             </li>
