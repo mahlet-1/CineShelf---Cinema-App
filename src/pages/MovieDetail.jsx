@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { FaPlay, FaStar, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMovies } from "../Hooks/useMovies";
@@ -15,6 +15,10 @@ export default function MovieDetail() {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
   const [isSaved, setIsSaved] = useState(false);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [id, location.pathname]);
 
   const { data, loading, error } = useMovies(`/${contentType}/${id}`);
   const { data: credits, loading: creditsLoading } = useMovies(`/${contentType}/${id}/credits`);
