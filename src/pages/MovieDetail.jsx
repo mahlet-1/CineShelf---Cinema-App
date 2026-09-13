@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaPlay, FaStar, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMovies } from "../Hooks/useMovies";
 import { useWatchlist } from "../Context/WatchlistContext";
@@ -15,6 +15,7 @@ export default function MovieDetail() {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
   const [isSaved, setIsSaved] = useState(false);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -174,10 +175,11 @@ export default function MovieDetail() {
                     return (
                     <div
                     key={member.id}
-                    className="min-w-[120px] w-[120px] flex-shrink-0 opacity-0 animate-fade-in-up"
+                    onClick={() => navigate(`/person/${member.id}`)}
+                    className="min-w-[120px] w-[120px] flex-shrink-0 opacity-0 animate-fade-in-up cursor-pointer group hover:scale-105 transition-transform duration-300"
                     style={{ animationDelay: `${delay}ms` }}
                     >
-                        <div className="aspect-[2/3] w-full overflow-hidden rounded-2xl bg-gray-800 shadow-md mb-2">
+                        <div className="aspect-[2/3] w-full overflow-hidden rounded-2xl bg-gray-800 shadow-md mb-2 ">
                         <img
                         src={
                         member.profile_path
@@ -185,11 +187,11 @@ export default function MovieDetail() {
                         : "https://via.placeholder.com/300x450?text=No+Photo"
                     }
                     alt={member.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full "
                     loading="lazy"
                     />
                     </div>
-                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-blue-500 transition-colors">
                         {member.name}
                         </p>
                         <p className="text-[11px] text-slate-500 dark:text-neutral-400 truncate">

@@ -54,6 +54,7 @@ export default function Navbar({ selectedGenre, setSelectedGenre }) {
         <Link to="/" className={linkStyle("/")}>Home</Link>
         <Link to="/movies" className={linkStyle("/movies")}>Movies</Link>
         <Link to="/series" className={linkStyle("/series")}>Series</Link>
+        <Link to="/celebrities" className={linkStyle("/celebrities")}> Celebrities</Link>
       </nav>
 
       <div className="flex items-center space-x-4 relative">

@@ -12,6 +12,8 @@ import Toast from "./Components/ui/Toast";
 import { NotificationProvider } from "./Context/NotificationContext";
 import { ThemeProvider, useTheme } from "./Context/ThemeContext";
 import { WatchlistProvider } from "./Context/WatchlistContext";
+import Celebrities from "./pages/Celebrities";
+import CelebrityDetail from "./pages/CelebrityDetail";
 
 function AppShell() {
   const { isDarkMode } = useTheme();
@@ -33,6 +35,8 @@ function AppShell() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/series/:id" element={<MovieDetail />} />
+            <Route path="/celebrities" element={<Celebrities />} />
+            <Route path="/person/:id" element={<CelebrityDetail />} />
             <Route path="/saved" element={<Watchlist />} />
             <Route path="*" element={<NotFound />} />
           
